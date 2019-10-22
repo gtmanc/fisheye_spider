@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import Constant
 import get_html
 import soup2list
+import write2ws
 
 """
 Before start to execute:
@@ -13,19 +14,17 @@ Use a command window to execute this script intead of the "run python in the ter
 No idea why it deosn't work.
 """
 
-""" Preparations: create an worksheet and url """
-wb = Workbook()
-#wb = load_workbook('mainbuilding33.xlsx')
-ws = wb.active #get a defult sheet
-#print(ws.title)
-# ws.title = "first" #give a name to a sheet
-# ws2 = wb.create_sheet("my_sheet") #create a new sheet
-# ws = wb["first"] #get a heet with a specified name
+""" Preparations: create an worksheet with default names in 1st row """
 """ Write first row wth default columns: Title, Date""" 
-ws[Constant.CELL_TITLE] = 'Title'
-ws[Constant.CELL_DATE] = 'Date'
-ws[Constant.CELL_PARTICIPATE] = 'Participant'
-ws[Constant.CELL_COMMENT] = 'Comment'
+list[Constant.LIST_INDEX_TITLE] = 'Title'
+list[Constant.LIST_INDEX_DATE] = 'Date'
+list[Constant.LIST_INDEX_OBJECTIVES] = 'OBJECTIVES'
+list[Constant.LIST_INDEX_PARTICIPATE1] = 'Participant1'
+list[Constant.LIST_INDEX_PARTICIPATE2] = 'Participant2'
+list[Constant.LIST_INDEX_PARTICIPATE3] = 'Participant3'
+list[Constant.CELL_COMMENT] = 'Comment'
+list[Constant.CELL_STATUS] = 'Status'
+ws = write2ws.init(list)
 
 """ create base url """
 base_url = 'http://jira.altek.com.tw/fisheye/cru/'
@@ -38,7 +37,7 @@ project_id = 'NW3-'
 #rest = 'http://jira.altek.com.tw/fisheye/cru/rest-service/reviews-v1/'
 #r = requests.get(rest+'user-v1=?username=JensonChin')
 #r = requests.get('http://jira.altek.com.tw/fisheye/cru/rest-service/reviews-v1?state=Review')
-soup = get_html.get_html(base_url + project_id + '1')
+soup = get_html.get_html(base_url + project_id + '264')
 list = soup2list.soup2list(soup)
 
 #if r.status_code == requests.codes.ok:
