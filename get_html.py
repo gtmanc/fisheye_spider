@@ -14,4 +14,6 @@ def get_html(url):
     if r.status_code == requests.codes.ok:
         print("request ok!")
         soup = BeautifulSoup(r.text, 'html.parser')
+    else:
+        soup = None
     return soup
