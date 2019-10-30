@@ -4,15 +4,34 @@ list = ["", "", "", "", "", "", "", "", "", ""]
 
 """parse soup and copy the interested ting to the list"""
 def soup2list(soup):
+    #print(soup.prettify())
+
     #Title
+    if soup.title == None:
+        print('No title found')
     list[Constant.LIST_INDEX_TITLE] = soup.title.string
     #list[0] = soup.title.string
-    print(soup.title.string)
+    #print(soup.title.string)
+
+    #Revew status
+    tag = soup.find(class_ = 'class="aui-lozenge aui-lozenge-success')
+    #tag = soup.find(id = 'review-state')
+    if tag == None:
+        print('No status found')
+    #print(tag.text)
+    list[Constant.LIST_INDEX_STATUS] = tag.text
 
     #DATE
-    tag = soup.find('time')
+    #if a review is closed, search tag "span" instead of 'time'
+    if tag.text == open:
+        tag = soup.find('time')
+    else:
+        tag = soup.find('span')
+
+    if tag == None:
+        print('No date found')
     list[Constant.LIST_INDEX_DATE] = tag.get('title')
-    print(tag.get('title'))
+    #print(tag.get('title'))
 
     #Objectives
     #TODO: need to figure out how to handle the case that there is no objective
@@ -37,10 +56,7 @@ def soup2list(soup):
     print(tag.text)
     list[Constant.LIST_INDEX_COMMENT] = tag.text
     
-    #Revew status
-    tag = soup.find(class_ = 'aui-lozenge aui-lozenge-complete')
-    print(tag.text)
-    list[Constant.LIST_INDEX_STATUS] = tag.text
+    
 
     
     for item in list:

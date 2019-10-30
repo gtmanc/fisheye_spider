@@ -7,6 +7,7 @@ import Constant
 import get_html
 import soup2list
 import write2ws
+import pw_manager
 
 """
 Before start to execute:
@@ -14,11 +15,18 @@ Use a command window to execute this script intead of the "run python in the ter
 No idea why it deosn't work.
 """
 """
-Workseet name
-TODO: These suppors to be entered by the user....
+Start to ask the necessary inputs
+1. Account and password
+2. Workseet name?
 """
+login_info = ['','']
+login_info[0] = input("Please enter account:")
+print("Please enter password:")
+login_info[1] = pw_manager.pwd_input()
+#print(login_info[0] + login_info[1])
+
 wb_name = 'mainbuilding33.xlsx'
-max_review = 2
+max_review = 3
 
 """ Preparations: create an work book with default names in 1st row, default sheet """
 """ Write first row with default columns""" 
@@ -47,8 +55,8 @@ project_id = 'NW3-'
 #basic test:NW-1, NW-264
 for i in range(max_review):
     index = i + 1
-    print('parse review[{num}]...'.format(num = project_id + str(index)), end=':')
-    soup = get_html.get_html(base_url + project_id + str(index))
+    print('parse review [{num}] '.format(num = project_id + str(index)), end=': ')
+    soup = get_html.get_html(base_url + project_id + str(index), login_info)
     if soup != None:
         print('OK')
         list = soup2list.soup2list(soup)
