@@ -17,7 +17,8 @@ No idea why it deosn't work.
 """
 Start to ask the necessary inputs
 1. Account and password
-2. Workseet name?
+2. Worksheet name
+3. Maximum number of ticket to be downloaded
 """
 login_info = ['','']
 login_info[0] = input("Please enter account:")
@@ -25,8 +26,15 @@ print("Please enter password:")
 login_info[1] = pw_manager.pwd_input()
 #print(login_info[0] + login_info[1])
 
-wb_name = 'mainbuilding33.xlsx'
-max_review = 3
+wb_name = input('Enter worksheet name. Or press Enter to use defult name (Review_report.xlsx))')
+if wb_name in '\r\n': 
+    wb_name = 'Review_report.xlsx'
+
+max_review = input('Enter maximum number of ticket to be downloaded. Or press Enter to use defult number (400))')
+if max_review in '\r\n':
+    max_review = 400
+else:
+    max_review = int(max_review)
 
 """ Preparations: create an work book with default names in 1st row, default sheet """
 """ Write first row with default columns""" 
@@ -55,6 +63,7 @@ project_id = 'NW3-'
 #basic test:NW-1, NW-264
 for i in range(max_review):
     index = i + 1
+    #index = 264
     print('parse review [{num}] '.format(num = project_id + str(index)), end=': ')
     soup = get_html.get_html(base_url + project_id + str(index), login_info)
     if soup != None:
@@ -62,32 +71,7 @@ for i in range(max_review):
         list = soup2list.soup2list(soup)
         write2ws.write2ws(list, ws, index+1)    #first row needs to be kept. so, index must be increased by 1
     else:
-        print('Failed!')
-        
-#if r.status_code == requests.codes.ok:
-#    print("request ok!")
-#    soup = BeautifulSoup(r.text, 'html.parser')
-    #print(soup.prettify())
-    
-    #a_tags = soup.find_all('a')
-    #for tag in a_tags:
-    # 輸出超連結的文字
-        # print(tag.string)
-    #    print(tag.get('href'))
-#print(soup.title.string)
-#ws['A2'] = soup.title.string
-    
+        print('Get url failed! skip this url...')
+        continue
 
 wb.save(wb_name) #save it
-
-
-
-
-# for i in range(1, 101):
-#     for j in range(1, 101):
-#         ws.cell(row = i, column = j, value = j)
-
-
-
-# print(wb.sheetnames)
-
