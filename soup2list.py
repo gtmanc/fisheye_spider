@@ -22,7 +22,7 @@ def soup2list(soup):
 
     #DATE
     #if a review is closed, search tag "span" instead of 'time'
-    if tag.text == 'open':
+    if tag.text == 'open' or tag.text == 'draft':
         name = 'time'
     else:
         name = 'span'    
@@ -65,12 +65,13 @@ def soup2list(soup):
     tag = soup.find_all(class_ = 'comment-content markup')
     if len(tag) != 0:
         comment = tag[len(tag)-1]
+        comment_text = comment.text
     else:
-        comment = soup.find(id = 'no-general-comments') 
-    if comment == None:
         print('No comment found')
+        comment_text = 'There is no general comment' #soup.find(id = 'no-general-comments') 
+    
     #print(tag.text)
-    list[Constant.LIST_INDEX_COMMENT] = comment.text
+    list[Constant.LIST_INDEX_COMMENT] = comment_text
     
     #for item in list:
     #    print(item)

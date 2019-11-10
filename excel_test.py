@@ -35,7 +35,7 @@ if max_review in '\r\n':
     max_review = 400
 else:
     max_review = int(max_review)
-
+#max_review = 1
 """ Preparations: create an work book with default names in 1st row, default sheet """
 """ Write first row with default columns""" 
 list = ["", "", "", "", "", "", "", "", "", ""]
@@ -55,15 +55,9 @@ project_id = 'NW3-'
 
 
 """ Start to parse the reviews and write the interesting tag string to worksheet one by one"""
-#r = requests.get(base_url + project_id + '1', auth = ('JensonChin','13038Abc'))
-#rest = 'http://jira.altek.com.tw/fisheye/reviews-v1/'
-#rest = 'http://jira.altek.com.tw/fisheye/cru/rest-service/reviews-v1/'
-#r = requests.get(rest+'user-v1=?username=JensonChin')
-#r = requests.get('http://jira.altek.com.tw/fisheye/cru/rest-service/reviews-v1?state=Review')
-#basic test:NW-1, NW-264
 for i in range(max_review):
     index = i + 1
-    #index = 264
+    #index = 375
     print('parse review [{num}] '.format(num = project_id + str(index)), end=': ')
     soup = get_html.get_html(base_url + project_id + str(index), login_info)
     if soup != None:
