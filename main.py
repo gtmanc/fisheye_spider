@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 import Constant
 import get_html
-import soup2list
-import write2ws
+import html_parser
+import write_ws
 import pw_manager
 
 """
@@ -47,7 +47,7 @@ list[Constant.LIST_INDEX_PARTICIPATE2] = 'Participant2'
 list[Constant.LIST_INDEX_PARTICIPATE3] = 'Participant3'
 list[Constant.LIST_INDEX_COMMENT] = 'Comment'
 list[Constant.LIST_INDEX_STATUS] = 'Status'
-wb = write2ws.init(list)
+wb = write_ws.init(list)
 ws = wb.active #get a defult sheet, will be used later
 """ create base url """
 base_url = 'http://jira.altek.com.tw/fisheye/cru/'
@@ -62,8 +62,8 @@ for i in range(max_review):
     soup = get_html.get_html(base_url + project_id + str(index), login_info)
     if soup != None:
         print('OK')
-        list = soup2list.soup2list(soup)
-        write2ws.write2ws(list, ws, index+1)    #first row needs to be kept. so, index must be increased by 1
+        list = html_parser.soup2list(soup)
+        write_ws.write2ws(list, ws, index+1)    #first row needs to be kept. so, index must be increased by 1
     else:
         print('Get url failed! skip this url...')
         continue
