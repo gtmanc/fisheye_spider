@@ -21,7 +21,7 @@ Start to ask the necessary inputs
 3. Maximum number of ticket to be downloaded
 """
 login_info = ['','']
-login_info[0] = input("Please enter account:")
+login_info[0] = input("Please enter account(usually something like JensonChin):")
 print("Please enter password:")
 login_info[1] = pw_manager.pwd_input()
 #print(login_info[0] + login_info[1])
